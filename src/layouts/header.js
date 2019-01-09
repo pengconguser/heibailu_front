@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Menu, Icon,Avatar } from 'antd';
-import IconFont from "./IconFont.js"
+import IconFont from "./IconFont.js";
+import {browserHistory} from 'react-router-dom';
 
 const SubMenu = Menu.SubMenu;
 const MenuItemGroup = Menu.ItemGroup;
@@ -10,12 +11,12 @@ const MenuItem = {
 }
 
 const Logo={
-    "margin-right": "20px"
+    "marginRight": "20px"
 }
 
 const userItem={
     float:"right",
-    "margin-right": "20px"
+    "marginRight": "20px"
 }
 
 class header extends Component{
@@ -32,10 +33,15 @@ class header extends Component{
    }
  
   handleClick = (e) => {
-    console.log('click ', e);
-    this.setState({
-      current: e.key,
-    });
+    switch(e.key){
+       case "login" :
+          // this.browserHistory.push("/login");
+          console.log(this.props.history);
+          break;
+       default:
+          console.log("没有跳转信息");
+          break;
+    }
   }
 
   render(){
@@ -46,10 +52,6 @@ class header extends Component{
         mode="horizontal"
         style ={MenuItem}
       >
-        {
-          // TODO:获取后台渲染的列表页面
-          // 搞几条数据撑门面
-        }
         <Menu.Item 
           key="mail"
           style ={Logo}
@@ -58,25 +60,25 @@ class header extends Component{
         </Menu.Item>
 
 
-        <Menu.Item key="app">
+        <Menu.Item key="12" >
           <IconFont type="icon-react" />react随笔
         </Menu.Item>
-        <Menu.Item key="app2">
+        <Menu.Item key="1">
           <IconFont type="icon-laravel" />laravel踩坑日记
         </Menu.Item>
         <Menu.Item key="app3">
           <IconFont type="icon-php" />php
         </Menu.Item>
-        <Menu.Item key="app4">
+        <Menu.Item key="13">
           <IconFont type="icon-java" />java
         </Menu.Item>
-        <Menu.Item key="app5">
+        <Menu.Item key="5">
           <IconFont type="icon-mysql" />mysql
         </Menu.Item>
-        <Menu.Item key="app6">
+        <Menu.Item key="4">
           <IconFont type="icon-redis" />redis
         </Menu.Item>
-        <Menu.Item key="app7">
+        <Menu.Item key="6">
           <IconFont type="icon-linux" />linux
         </Menu.Item>
 
@@ -93,7 +95,7 @@ class header extends Component{
         :
         <SubMenu style={userItem} title={<span className="submenu-title-wrapper"><Icon type="build" />登录/注册</span>}>
           <Menu.Item key="setting:5"><Icon type="book" />注册</Menu.Item>
-          <Menu.Item key="setting:6"><Icon type="login"></Icon>登录</Menu.Item>
+          <Menu.Item key="login"><Icon type="login"></Icon>登录</Menu.Item>
         </SubMenu>
         }
 

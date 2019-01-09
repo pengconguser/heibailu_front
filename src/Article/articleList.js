@@ -3,26 +3,29 @@ import { List, Icon,Layout,Input,Card} from 'antd';
 import QueueAnim from 'rc-queue-anim';
 import PropTypes from 'prop-types';
 
-const data = [
-  'Racing car sprays burning fuel into crowd.',
-  'Japanese princess to wed commoner.',
-  'Australian walks 100km after outback crash.',
-  'Man charged over missing wedding girl.',
-  'Los Angeles battles huge wildfires.',
-];
-
 const { Content } = Layout;
 
 const Search =Input.Search;
 
 const container={
-	 "margin-right": "20%",
-	 "margin-left": "20%"
+	 "marginRight": "20%",
+	 "marginLeft": "20%"
 }
 
 class articleList extends Component{
 	constructor(props){
 		super(props);
+	}
+
+	getDescriptionContent(article){
+		 if(article.description==null){
+		 	let result=article.content.replace(/<\/?.+?>/g,"");
+			let replaceContent=result.replace(/ /g,"");
+			replaceContent=replaceContent.replace("&nbsp","");
+		 	article.description=replaceContent.substring(0,100);
+		 }
+
+		 return article.description;
 	}
 
     render(){
@@ -52,11 +55,13 @@ class articleList extends Component{
 		 		  article => (
 			 		<QueueAnim delay={300} className="queue-simple">
 			          <List.Item actions={[
-			          	<a><Icon type="copy" />category</a>, 
-			          	<a><Icon type="usergroup-add" />user</a>,
-			          	<div><Icon type="dashboard" />15小时前</div>
+			          	<a ><Icon type="copy" />{article.category.name}</a>,
+			          	<a ><Icon type="usergroup-add" />{article.user.name}</a>,
+			          	<div>
+				          	<Icon type="dashboard" />{article.created_at}
+			          	</div>
 			          	]} key={article.id}>
-			              <Card title={article.title}>Card content</Card>
+			              <Card title={article.title}>{this.getDescriptionContent(article)}</Card>
 			          </List.Item>
 			      	</QueueAnim>
 			      )
